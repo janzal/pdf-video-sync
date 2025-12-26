@@ -289,8 +289,31 @@ function setupDivider() {
         // Get current flex values
         const videoFlexBasis = window.getComputedStyle(videoPanel).flexBasis;
         const pdfFlexBasis = window.getComputedStyle(pdfPanel).flexBasis;
-        startVideoFlex = parseFloat(videoFlexBasis);
-        startPdfFlex = parseFloat(pdfFlexBasis);
+        
+        // Parse flex-basis values, handling both percentage and pixel values
+        const parseFlexBasis = (value, containerSize) => {
+            if (value.endsWith('%')) {
+                return parseFloat(value);
+            } else if (value.endsWith('px')) {
+                return (parseFloat(value) / containerSize) * 100;
+            } else {
+                // Default to 50% if unable to parse
+                return 50;
+            }
+        };
+        
+        const container = document.getElementById('container');
+        const containerWidth = container.clientWidth;
+        const containerHeight = container.clientHeight;
+        const isMobile = window.innerWidth <= 768;
+        
+        if (isMobile) {
+            startVideoFlex = parseFlexBasis(videoFlexBasis, containerHeight);
+            startPdfFlex = parseFlexBasis(pdfFlexBasis, containerHeight);
+        } else {
+            startVideoFlex = parseFlexBasis(videoFlexBasis, containerWidth);
+            startPdfFlex = parseFlexBasis(pdfFlexBasis, containerWidth);
+        }
         
         e.preventDefault();
     });
@@ -310,10 +333,19 @@ function setupDivider() {
             let newVideoFlex = startVideoFlex + deltaPercent;
             let newPdfFlex = startPdfFlex - deltaPercent;
             
-            // Enforce minimum sizes
-            const minPercent = 200 / containerHeight * 100;
-            if (newVideoFlex < minPercent) newVideoFlex = minPercent;
-            if (newPdfFlex < minPercent) newPdfFlex = minPercent;
+            // Enforce minimum sizes (20% or 200px, whichever is smaller)
+            const minPercent = Math.min((200 / containerHeight) * 100, 20);
+            const maxPercent = 100 - minPercent;
+            
+            if (newVideoFlex < minPercent) {
+                newVideoFlex = minPercent;
+                newPdfFlex = 100 - minPercent;
+            } else if (newVideoFlex > maxPercent) {
+                newVideoFlex = maxPercent;
+                newPdfFlex = minPercent;
+            } else {
+                newPdfFlex = 100 - newVideoFlex;
+            }
             
             videoPanel.style.flexBasis = `${newVideoFlex}%`;
             pdfPanel.style.flexBasis = `${newPdfFlex}%`;
@@ -326,10 +358,19 @@ function setupDivider() {
             let newVideoFlex = startVideoFlex + deltaPercent;
             let newPdfFlex = startPdfFlex - deltaPercent;
             
-            // Enforce minimum sizes
-            const minPercent = 200 / containerWidth * 100;
-            if (newVideoFlex < minPercent) newVideoFlex = minPercent;
-            if (newPdfFlex < minPercent) newPdfFlex = minPercent;
+            // Enforce minimum sizes (20% or 200px, whichever is smaller)
+            const minPercent = Math.min((200 / containerWidth) * 100, 20);
+            const maxPercent = 100 - minPercent;
+            
+            if (newVideoFlex < minPercent) {
+                newVideoFlex = minPercent;
+                newPdfFlex = 100 - minPercent;
+            } else if (newVideoFlex > maxPercent) {
+                newVideoFlex = maxPercent;
+                newPdfFlex = minPercent;
+            } else {
+                newPdfFlex = 100 - newVideoFlex;
+            }
             
             videoPanel.style.flexBasis = `${newVideoFlex}%`;
             pdfPanel.style.flexBasis = `${newPdfFlex}%`;

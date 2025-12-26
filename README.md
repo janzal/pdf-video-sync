@@ -185,7 +185,7 @@ Customize the appearance by editing `styles.css`:
 
 The default configuration uses:
 - **Video**: Big Buck Bunny (open source animated short)
-- **PDF**: TraceMoney research paper
+- **PDF**: TraceMonkey research paper
 - **Sync**: Pages change every 30 seconds
 
 This demonstrates how you could sync a video lecture with presentation slides, educational content with transcripts, or any video-document pair.
