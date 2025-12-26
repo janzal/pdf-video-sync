@@ -1,0 +1,14 @@
+{
+  "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+  "pdfUrl": "https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf",
+  "sync": [
+    {"time": 0, "page": 1},
+    {"time": 30, "page": 2},
+    {"time": 60, "page": 3},
+    {"time": 90, "page": 4},
+    {"time": 120, "page": 5},
+    {"time": 150, "page": 6},
+    {"time": 180, "page": 7},
+    {"time": 210, "page": 8}
+  ]
+}
