@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF-Video Sync</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" 
+            integrity="sha384-OLBgp1GsljhM2TJ+sbHjaiH9txEUvgdDTAzHv2P24donTt6/529l+9Ua0vFImLlb" 
+            crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>PDF-Video Sync</h1>
+    </header>
+
+    <div id="container">
+        <!-- Video Panel -->
+        <div id="video-panel" class="panel">
+            <div class="panel-content">
+                <video id="video" controls>
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-info">
+                    <span id="video-time">0:00</span> / <span id="video-duration">0:00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div id="divider"></div>
+
+        <!-- PDF Panel -->
+        <div id="pdf-panel" class="panel">
+            <div class="panel-content">
+                <canvas id="pdf-canvas"></canvas>
+                <div class="pdf-controls">
+                    <button id="prev-page" class="btn">Previous</button>
+                    <span id="page-info">Page <span id="current-page">0</span> of <span id="total-pages">0</span></span>
+                    <button id="next-page" class="btn">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="status-bar">
+        Ready. Loading configuration...
+    </footer>
+
+    <script>
+        // Configure PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>
